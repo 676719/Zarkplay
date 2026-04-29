@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FLEXZY GAMES</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+    
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    body {
+      background: linear-gradient(rgba(0, 15, 25, 0.85), rgba(0, 10, 20, 0.9)), 
+                  url('https://images.unsplash.com/photo-1550745165-9bc0b252726f?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb') center/cover no-repeat fixed;
+      color: #fff;
+      font-family: 'Press Start 2P', cursive;
+      text-align: center;
+      min-height: 100vh;
+      padding: 40px 20px;
+      overflow-x: hidden;
+    }
+
+    h1 {
+      font-size: 4.2rem;
+      margin-bottom: 80px;
+      text-shadow: 0 0 25px #00ffcc, 0 0 55px #00ffcc, 0 0 95px #00aaff;
+      color: #00ffcc;
+      letter-spacing: 8px;
+      animation: glow 2.5s infinite alternate;
+    }
+
+    @keyframes glow {
+      from { text-shadow: 0 0 25px #00ffcc; }
+      to { text-shadow: 0 0 55px #00ffcc, 0 0 95px #00aaff; }
+    }
+
+    /* Pantalla Principal */
+    .main-screen {
+      margin-top: 100px;
+    }
+
+    .main-btn {
+      background: linear-gradient(#00ffcc, #00aabb);
+      color: #000;
+      border: 6px solid #00ffff;
+      padding: 32px 110px;
+      font-size: 2.3rem;
+      cursor: pointer;
+      border-radius: 25px;
+      box-shadow: 0 0 50px #00ffcc;
+      text-transform: uppercase;
+      letter-spacing: 4px;
+      transition: all 0.4s;
+    }
+
+    .main-btn:hover {
+      transform: scale(1.15) rotate(3deg);
+      box-shadow: 0 0 80px #00ffff;
+    }
+
+    /* Pantalla de Juegos */
+    .games-screen {
+      display: none;
+      padding: 40px 20px;
+    }
+    .games-screen.active {
+      display: block;
+    }
+
+    .games-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 30px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .game-card {
+      background: rgba(0, 30, 40, 0.92);
+      border: 5px solid #00ffcc;
+      border-radius: 20px;
+      padding: 35px 20px;
+      cursor: pointer;
+      transition: all 0.4s;
+      box-shadow: 0 0 30px rgba(0, 255, 204, 0.4);
+    }
+
+    .game-card:hover {
+      transform: translateY(-20px) scale(1.1);
+      border-color: #00ffff;
+      box-shadow: 0 0 60px #00ffff;
+    }
+
+    .game-card h3 {
+      color: #00ffff;
+      font-size: 1.45rem;
+      text-shadow: 0 0 12px #00ffff;
+      line-height: 1.4;
+    }
+
+    /* Pantalla del Juego */
+    .game-area {
+      display: none;
+      max-width: 1350px;
+      margin: 40px auto;
+      padding: 20px;
+    }
+    .game-area.active {
+      display: block;
+    }
+
+    iframe {
+      width: 100%;
+      height: 720px;
+      border: 8px solid #00ffff;
+      border-radius: 20px;
+      background: #000;
+      box-shadow: 0 0 60px rgba(0, 255, 255, 0.5);
+    }
+
+    .action-buttons {
+      margin: 40px 0;
+    }
+    .action-buttons button {
+      background: #00ccaa;
+      color: #000;
+      border: none;
+      padding: 20px 55px;
+      margin: 12px;
+      font-family: 'Press Start 2P', cursive;
+      cursor: pointer;
+      border-radius: 12px;
+      font-size: 1.25rem;
+      transition: 0.3s;
+    }
+    .action-buttons button:hover {
+      background: #00ffdd;
+      transform: scale(1.08);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Pantalla Principal -->
+  <div id="mainScreen" class="main-screen">
+    <h1>FLEXZY GAMES</h1>
+    <button class="main-btn" onclick="showGamesScreen()">
+      🔒 JUEGOS SECRETOS
+    </button>
+  </div>
+
+  <!-- Pantalla de Juegos -->
+  <div id="gamesScreen" class="games-screen">
+    <h2 style="color: #00ffcc; margin-bottom: 50px; font-size: 2.1rem;">SELECCIONA UN JUEGO</h2>
+    
+    <div class="games-grid">
+      <div class="game-card" onclick="loadGame('Unblocked Games', 'https://slope3unblocked.github.io/')">
+        <h3>Unblocked Games</h3>
+      </div>
+      <div class="game-card" onclick="loadGame('Free Games', 'https://slope2unblocked.github.io/')">
+        <h3>Free Games</h3>
+      </div>
+      <div class="game-card" onclick="loadGame('Super Games', 'https://1v1lol-unblocked.bitbucket.io/')">
+        <h3>(Super Games)</h3>
+      </div>
+      <div class="game-card" onclick="loadGame('Super Games', 'https://geometrydashunblocked.github.io/')">
+        <h3>Super Games</h3>
+      </div>
+    </div>
+
+    <div style="margin-top: 60px;">
+      <button onclick="backToMain()" style="background:#006666; color:white; padding:18px 50px; border:none; border-radius:12px; font-size:1.1rem; cursor:pointer;">
+        ← VOLVER AL INICIO
+      </button>
+    </div>
+  </div>
+
+  <!-- Pantalla del Juego -->
+  <div id="gameArea" class="game-area">
+    <h2 id="gameTitle" style="color: #00ffff; margin-bottom: 30px; text-shadow: 0 0 15px #00ffff;"></h2>
+    <iframe id="gameFrame" allowfullscreen></iframe>
+    
+    <div class="action-buttons">
+      <button onclick="openInAboutBlank()" class="fullscreen-btn">🌐 ABRIR EN ABOUT:BLANK</button>
+      <button onclick="backToGames()">← VOLVER A LOS JUEGOS</button>
+    </div>
+  </div>
+
+  <script>
+    let currentUrl = '';
+    let currentTitle = '';
+
+    function showGamesScreen() {
+      document.getElementById('mainScreen').style.display = 'none';
+      document.getElementById('gamesScreen').classList.add('active');
+    }
+
+    function loadGame(title, url) {
+      currentTitle = title;
+      currentUrl = url;
+      document.getElementById('gamesScreen').classList.remove('active');
+      document.getElementById('gameArea').classList.add('active');
+      document.getElementById('gameTitle').textContent = title;
+      document.getElementById('gameFrame').src = url;
+    }
+
+    function openInAboutBlank() {
+      if (!currentUrl) return;
+      const win = window.open('about:blank', '_blank');
+      if (win) {
+        win.document.write(`
+          <!DOCTYPE html>
+          <html><head><title>${currentTitle}</title>
+          <style>body,html{margin:0;padding:0;height:100%;overflow:hidden;background:#000;}
+          iframe{width:100%;height:100%;border:none;}</style></head>
+          <body><iframe src="${currentUrl}" allowfullscreen></iframe></body></html>
+        `);
+        win.document.close();
+      } else {
+        alert("Por favor permite las ventanas emergentes.");
+      }
+    }
+
+    function backToGames() {
+      document.getElementById('gameFrame').src = '';
+      document.getElementById('gameArea').classList.remove('active');
+      document.getElementById('gamesScreen').classList.add('active');
+    }
+
+    function backToMain() {
+      document.getElementById('gamesScreen').classList.remove('active');
+      document.getElementById('mainScreen').style.display = 'block';
+    }
+
+    document.addEventListener('keydown', e => {
+      if (e.key === "Escape") {
+        if (document.getElementById('gameArea').classList.contains('active')) {
+          backToGames();
+        } else {
+          backToMain();
+        }
+      }
+    });
+  </script>
+</body>
+</html>
