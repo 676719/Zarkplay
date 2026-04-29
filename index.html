@@ -137,9 +137,85 @@
       background: #00ffdd;
       transform: scale(1.08);
     }
+
+    /* 🔥 NUEVO: Botón secreto */
+    #secretBtn {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      width: 55px;
+      height: 55px;
+      background: #00ffcc;
+      color: #000;
+      border-radius: 50%;
+      font-family: 'Press Start 2P', cursive;
+      font-size: 1.6rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      border: 4px solid #00ffff;
+      box-shadow: 0 0 20px #00ffff;
+      z-index: 9999;
+      transition: 0.3s;
+    }
+
+    #secretBtn:hover {
+      transform: scale(1.15);
+      box-shadow: 0 0 40px #00ffff;
+    }
+
+    /* 🔥 NUEVO: Pantalla secreta */
+    #secretScreen {
+      display: none;
+      padding: 40px;
+      text-align: center;
+    }
+
+    #secretScreen.active {
+      display: block;
+    }
+
+    /* 🔥 NUEVO: Error pantalla completa */
+    #errorOverlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: red;
+      color: white;
+      font-size: 4rem;
+      font-family: 'Press Start 2P', cursive;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 10000;
+    }
   </style>
 </head>
 <body>
+
+  <!-- 🔥 NUEVO: Botón secreto -->
+  <div id="secretBtn">F</div>
+
+  <!-- 🔥 NUEVO: Error pantalla completa -->
+  <div id="errorOverlay">ERROR</div>
+
+  <!-- 🔥 NUEVO: Pantalla secreta -->
+  <div id="secretScreen">
+    <h2 style="color:#00ffff; margin-bottom:20px;">TOP GAMES</h2>
+
+    <iframe id="crazyFrame" 
+            src="https://unblockedgames76-pro.github.io/#google_vignette" 
+            style="width:100%; height:700px; border:8px solid #00ffff; border-radius:20px;">
+    </iframe>
+
+    <button onclick="openCrazyAboutBlank()" 
+            style="margin-top:25px; padding:20px 50px; background:#00ffcc; border:none; border-radius:12px; cursor:pointer; font-family:'Press Start 2P';">
+      🌐 ABRIR EN ABOUT:BLANK
+    </button>
+  </div>
 
   <!-- Pantalla Principal -->
   <div id="mainScreen" class="main-screen">
@@ -241,6 +317,44 @@
         }
       }
     });
+
+    /* 🔥 NUEVO: Botón secreto con contraseña */
+    document.getElementById("secretBtn").onclick = () => {
+      const pass = prompt("Introduce la contraseña:");
+
+      if (pass === "ZECT19") {
+        document.getElementById("mainScreen").style.display = "none";
+        document.getElementById("gamesScreen").classList.remove("active");
+        document.getElementById("gameArea").classList.remove("active");
+        document.getElementById("secretScreen").classList.add("active");
+      } else {
+        const err = document.getElementById("errorOverlay");
+        err.style.display = "flex";
+        setTimeout(() => {
+          err.style.display = "none";
+        }, 3000);
+      }
+    };
+
+    /* 🔥 NUEVO: Abrir CrazyGames en about:blank */
+    function openCrazyAboutBlank() {
+      const win = window.open("about:blank", "_blank");
+      win.document.write(`
+        <html>
+        <head>
+          <title>CrazyGames</title>
+          <style>
+            body,html{margin:0;padding:0;height:100%;overflow:hidden;background:#000;}
+            iframe{width:100%;height:100%;border:none;}
+          </style>
+        </head>
+        <body>
+          <iframe src="https://unblockedgames76-pro.github.io/" allowfullscreen></iframe>
+        </body>
+        </html>
+      `);
+      win.document.close();
+    }
   </script>
 </body>
 </html>
