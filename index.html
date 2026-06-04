@@ -45,7 +45,7 @@
       flex-wrap: wrap;
       justify-content: center;
       gap: 20px;
-      max-width: 900px;
+      max-width: 1000px;
       margin: auto;
     }
 
@@ -74,14 +74,14 @@
 
     .game-title {
       position: absolute;
-      bottom: 8px;
+      bottom: 6px;
       left: 50%;
       transform: translateX(-50%);
       color: #00ffff;
-      font-size: 0.75rem;
+      font-size: 0.7rem;
+      text-shadow: 0 0 10px #00ffff;
     }
 
-    /* GAME AREA */
     .game-area { display: none; }
     .game-area.active { display: block; }
 
@@ -100,6 +100,7 @@
       border: none;
       cursor: pointer;
       border-radius: 10px;
+      margin-right: 10px;
     }
 
   </style>
@@ -118,8 +119,8 @@
 
     <div class="games-grid">
 
-      <div class="game-card" onclick="loadGame('PROXY','https://676719.github.io/Proxyhack//')">
-        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSiqfVKfK_mS3_i7M60lo5QwK4XgqnlDuv3iA&s">
+      <div class="game-card" onclick="loadGame('PROXY','https://676719.github.io/Proxyhack/')">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSiqfVKfK_mS3_i7M60lo5QwK4XgqnlDuv3iA&s=80">
         <div class="game-title">PROXY</div>
       </div>
 
@@ -135,32 +136,51 @@
         <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSsm4r9Bs9GM0T1KdFWR__VOqVlVo9Hl4sstA&s=80">
       </div>
 
+      <div class="game-card" onclick="loadGame('Parkour','https://slopegame.io/')">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTMS4qFKdKWJ9B4O8yGe_bkf4dIEZ5AspDRCA&s=80">
+      </div>
+
+      <div class="game-card" onclick="loadGame('Driving','https://www.friv.com/')">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRH-yYe1srohrExBbwW8rssSsqU2Lw7n-4CSg&s=80">
+      </div>
+
+      <div class="game-card" onclick="loadGame('Action','https://krunker.io/')">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQZySam2BRYGssXMjfof1UJI1PaQ7stjjuOxfI4hbnf&s=80">
+      </div>
+
+      <div class="game-card" onclick="loadGame('Sandbox','https://sandboxels.r74n.com/')">
+        <img src="https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=500&q=80">
+      </div>
+
     </div>
 
-    <!-- BOTÓN VOLVER INICIO -->
     <button onclick="backToMain()">← VOLVER AL INICIO</button>
-
   </div>
 
-  <!-- GAME AREA -->
+  <!-- GAME -->
   <div id="gameArea" class="game-area">
     <h2 id="gameTitle" style="color:#00ffcc;"></h2>
     <iframe id="gameFrame"></iframe>
 
-    <!-- BOTONES VOLVER -->
+    <!-- BOTONES NUEVOS -->
     <div>
       <button onclick="backToGames()">← VOLVER A JUEGOS</button>
+      <button onclick="openFullScreen()">FULL SCREN</button>
       <button onclick="backToMain()">🏠 INICIO</button>
     </div>
   </div>
 
   <script>
+    let currentUrl = '';
+
     function showGames() {
       document.getElementById('mainScreen').style.display = 'none';
       document.getElementById('gamesScreen').classList.add('active');
     }
 
     function loadGame(title, url) {
+      currentUrl = url;
+
       document.getElementById('gamesScreen').classList.remove('active');
       document.getElementById('gameArea').classList.add('active');
 
@@ -179,6 +199,29 @@
       document.getElementById('gameArea').classList.remove('active');
       document.getElementById('gamesScreen').classList.remove('active');
       document.getElementById('mainScreen').style.display = 'block';
+    }
+
+    function openFullScreen() {
+      if (!currentUrl) return;
+
+      const win = window.open("about:blank", "_blank");
+
+      win.document.write(`
+        <html>
+          <head>
+            <title>FULL SCREN</title>
+            <style>
+              body,html{margin:0;padding:0;height:100%;overflow:hidden;background:black;}
+              iframe{width:100%;height:100%;border:none;}
+            </style>
+          </head>
+          <body>
+            <iframe src="${currentUrl}" allowfullscreen></iframe>
+          </body>
+        </html>
+      `);
+
+      win.document.close();
     }
   </script>
 
